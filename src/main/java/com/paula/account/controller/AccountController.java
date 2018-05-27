@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.paula.account.business.AccountBusiness;
@@ -35,14 +36,14 @@ public class AccountController {
 	
 	
 	@RequestMapping(method = POST)
-	public Account insertAccount(Account account) {
+	public Account insertAccount(@RequestBody Account account) {
 		return accountBusiness.insert(account);
 	}
 	
 	
 	@RequestMapping(method = PUT, path = "{accountId}")
 	public Account updateAccount(@PathVariable("accountId") Long accountId
-			,Account account) {
+			,@RequestBody Account account) {
 		return accountBusiness.update(account, accountId);
 	}
 	

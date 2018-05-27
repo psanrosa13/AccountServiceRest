@@ -22,11 +22,11 @@ public class AccountBusiness {
 		Optional<AccountEntity> accountEntity = accountRepository.findById(accountId);
 		Account account = new Account();
 		
-		if(Objects.isNull(accountEntity)) {
+		if(Objects.isNull(accountEntity.get())) {
 			throw new BusinessException("Conta não existe!");
 		}
 		
-		BeanUtils.copyProperties(accountEntity , account);
+		BeanUtils.copyProperties(accountEntity.get(), account);
 		
 		return account;
 	}
@@ -35,12 +35,12 @@ public class AccountBusiness {
 		AccountEntity accountEntity = new AccountEntity();
 		BeanUtils.copyProperties(account, accountEntity);
 		
-		AccountEntity accountEmail = accountRepository.findByEmail(account.getEmail());
-		
-		if (Objects.nonNull(accountEmail)) {
-			throw new BusinessException("Este e-mail já esta vinculado a outra conta !");
-		}
-		
+//		AccountEntity accountEmail = accountRepository.findByEmail(account.getEmail());
+//		
+//		if (Objects.nonNull(accountEmail)) {
+//			throw new BusinessException("Este e-mail já esta vinculado a outra conta !");
+//		}
+//		
 		AccountEntity newAccount = accountRepository.save(accountEntity);
 		
 		BeanUtils.copyProperties(newAccount, account);
@@ -51,18 +51,17 @@ public class AccountBusiness {
 	public Account update(Account account, Long accountId ) {
 		Optional<AccountEntity> accountEntity = accountRepository.findById(accountId);
 		
-		if(Objects.isNull(accountEntity)) {
+		if(Objects.isNull(accountEntity.get())) {
 			throw new BusinessException("Conta não existe!");
 		}
 		
-		BeanUtils.copyProperties(accountEntity, account);
+		account.setId(accountEntity.get().getId());
 		
-		AccountEntity accountSave = new AccountEntity();
-		BeanUtils.copyProperties(accountSave, accountEntity);
+		BeanUtils.copyProperties(account, accountEntity.get());
 		
-		accountSave = accountRepository.save(accountSave);
+		AccountEntity accountSave = accountRepository.save(accountEntity.get());
 		
-		BeanUtils.copyProperties(account, accountSave);
+		BeanUtils.copyProperties(accountSave, account);
 		
 		return account;
 	}

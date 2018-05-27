@@ -11,6 +11,6 @@ import com.paula.account.entity.AccountEntity;
 @Repository
 public interface AccountRepository extends CrudRepository<AccountEntity, Long>{
 
-	@Query("SELECT AccountEntity FROM AccountEntity a WHERE a.email=:email")
-	AccountEntity findByEmail(@Param("email") String email);
+//	@Query("SELECT AccountEntity FROM AccountEntity a WHERE a.email=:email")
+//	AccountEntity findByEmail(@Param("email") String email);
 }
