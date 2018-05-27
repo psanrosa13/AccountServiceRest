@@ -35,12 +35,12 @@ public class AccountBusiness {
 		AccountEntity accountEntity = new AccountEntity();
 		BeanUtils.copyProperties(account, accountEntity);
 		
-//		AccountEntity accountEmail = accountRepository.findByEmail(account.getEmail());
-//		
-//		if (Objects.nonNull(accountEmail)) {
-//			throw new BusinessException("Este e-mail já esta vinculado a outra conta !");
-//		}
-//		
+		AccountEntity accountEmail = accountRepository.findByEmail(account.getEmail());
+		
+		if (Objects.nonNull(accountEmail)) {
+			throw new BusinessException("Este e-mail já esta vinculado a outra conta !");
+		}
+		
 		AccountEntity newAccount = accountRepository.save(accountEntity);
 		
 		BeanUtils.copyProperties(newAccount, account);
@@ -73,10 +73,7 @@ public class AccountBusiness {
 			throw new BusinessException("Conta não existe!");
 		}
 		
-		AccountEntity accountDelete= new AccountEntity();
-		BeanUtils.copyProperties(accountEntity, accountDelete);
-		
-		accountRepository.delete(accountDelete);
+		accountRepository.delete(accountEntity.get());
 	}
 	
 }

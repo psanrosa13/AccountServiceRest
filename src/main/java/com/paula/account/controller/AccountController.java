@@ -5,6 +5,8 @@ import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 
+import javax.validation.Valid;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -36,7 +38,7 @@ public class AccountController {
 	
 	
 	@RequestMapping(method = POST)
-	public Account insertAccount(@RequestBody Account account) {
+	public Account insertAccount(@Valid @RequestBody Account account) {
 		return accountBusiness.insert(account);
 	}
 	
